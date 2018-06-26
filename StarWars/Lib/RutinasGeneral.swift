@@ -85,6 +85,34 @@ func CargarVehiculos(completion: @escaping (_ result: Bool)->()) {
     })
 }
 
+func CargarStarships(completion: @escaping (_ result: Bool)->()) {
+    CargarDatosJSON(cadena:"\(GlbUrl)/starships/?format=json", completion: {
+        (result)->() in
+        for (_,sub):(String, JSON) in result["results"] {
+            StarshipsArray.append((
+                name:sub["name"].stringValue,
+                model:sub["model"].stringValue,
+                manufacturer:sub["manufacturer"].stringValue,
+                cost_in_credits:sub["cost_in_credits"].stringValue,
+                length:sub["length"].stringValue,
+                max_atmosphering_speed: sub["max_atmosphering_speed"].stringValue,
+                crew:sub["crew"].stringValue,
+                passengers:sub["passengers"].stringValue,
+                cargo_capacity:sub["cargo_capacity"].stringValue,
+                consumables:sub["consumables"].stringValue,
+                hyperdrive_rating:sub["hyperdrive_rating"].stringValue,
+                MGLT:sub["MGLT"].stringValue,
+                starship_class:sub["vehicle_class"].stringValue,
+                pilots:sub["pilots"].arrayObject as! [String],
+                films:sub["films"].arrayObject as! [String],
+                created:sub["created"].stringValue,
+                edited:sub["edited"].stringValue,
+                url:sub["url"].stringValue
+            ))
+        }
+        completion(true)
+    })
+}
 
 
 func ListaDePersonajes()->String {
